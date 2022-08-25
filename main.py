@@ -3,8 +3,6 @@ import os
 import Flags as Flag
 import defs as Def
 
-version= 'v0.1'
-
 ser = serial.Serial()
 ser.bytesize = serial.EIGHTBITS
 ser.stopbits = serial.STOPBITS_ONE
@@ -16,9 +14,10 @@ ser.write_timeout= 1.0
 
 def Init_Serial():
 	while(Flag.Init== False):
-		print('')
-		print('Enter COM port to init (ex COM8)')
-		Enter= input("enter: ")
+		print('''
+			Enter COM port to close (ex COM8)
+			''')
+		Enter= input(Def.EnterString)
 		if(Enter[0: 3]== "COM"):
 			ser.port = Enter
 			try:
@@ -27,7 +26,7 @@ def Init_Serial():
 				print('Serial port is closed try again')
 			else:
 				Flag.Init= True
-		elif(Enter== 'Exit' or Enter== 'exit' or Enter== 'E' or Enter== 'e'):
+		elif(Enter== Def.ExitCommand1 or Enter== Def.ExitCommand2 or Enter== Def.ExitCommand3 or Enter== Def.ExitCommand4):
 			print('')
 			break
 		else:
@@ -39,8 +38,17 @@ def Init_Serial():
 # 		ser.port= 'COM' + str(Enter)
 
 def Options():
-	print('')
-	print('options')
+	clear()
+	print(Def.OptionsList)
+	Enter= input(Def.EnterString)
+	if(Enter== Def.ColumnsCommand):
+		print('		Enter num of columns')
+		Enter== input(Def.EnterString)
+		Flag.Columns= int(Enter)
+	elif(Enter== Def.FormatCommand):
+		print(Def.FormatList)
+		Enter== input(Def.EnterString)
+		Flag.NumFormat= int(Enter)
 
 def Read():
 	print('to stop conversation use ^C')
@@ -56,19 +64,20 @@ def Read():
 			except:
 				Flag.Init= False
 			else:
-				ser.open()
 				break
 		else:
 			if(data!= b''):
+				DataLine= ''
 				for i in data:
 					print(i)
 
 def Close_Port():
 	Flag.Close= True
 	while Flag.Close:
-		print('')
-		print('Enter COM port to close (ex COM8)')
-		Enter= input("enter: ")
+		print('''
+			Enter COM port to close (ex COM8)
+			''')
+		Enter= input(Def.EnterString)
 		if(Enter[0: 3]== "COM"):
 			ser.port = Enter
 			try:
@@ -78,7 +87,7 @@ def Close_Port():
 			else:
 				Flag.Close= False
 				Flag.Init= False
-		elif(Enter== 'Exit' or Enter== 'exit' or Enter== 'E' or Enter== 'e'):
+		elif(Enter== Def.ExitCommand1 or Enter== Def.ExitCommand2 or Enter== Def.ExitCommand3 or Enter== Def.ExitCommand4):
 			print('')
 			break
 		else:
@@ -93,39 +102,26 @@ if __name__ == '__main__':
 		clear = lambda: os.system('clear')
 	while(True):
 		clear()
-		print('serial Reader ' + version)
+		print('''
+			serial Reader ''' + Def.version)
 		if(Flag.Init== True):
 			print('port initialised')
-		Enter= input('enter: ')
-		if(Enter== 'help' or Enter== 'h' or Enter== 'Help' or Enter== 'H'):
+		Enter= input(Def.EnterString)
+		if(Enter== Def.HelpCommand1 or Enter== Def.HelpCommand2 or Enter== Def.HelpCommand3 or Enter== Def.HelpCommand4):
 			clear()
-			print('command list:')
-			print('enter: Help/ help/ H/ h')
-			print('- to have command list')
-			print('')
-			print('enter: Init/ init/ I/ i')
-			print('- to init ur port')
-			print('')
-			print('enter: Options/ options/ O/ o')
-			print('- to set options')
-			print('')
-			print('enter: Read/ read/ R/ r')
-			print('- to read port')
-			print('')
-			print('enter: Close/ close/ C/ c')
-			print('- to close port')
+			print(Def.HelpList)
 			Enter= input('')
-		elif(Enter== 'Init' or Enter== 'init' or Enter== 'I' or Enter== 'i'):
+		elif(Enter== Def.InitCommand1 or Enter== Def.InitCommand2 or Enter== Def.InitCommand3 or Enter== Def.InitCommand4):
 			Init_Serial()
-		elif(Enter== 'Options' or Enter== 'options' or Enter== 'O' or Enter== 'o'):
+		elif(Enter== Def.OptionCommand1 or Enter== Def.OptionCommand2 or Enter== Def.OptionCommand3 or Enter== Def.OptionCommand4):
 			Options()
-		elif(Enter== 'Read' or Enter== 'read' or Enter== 'R' or Enter== 'r'):
+		elif(Enter== Def.ReadCommand1 or Enter== Def.ReadCommand2 or Enter== Def.ReadCommand3 or Enter== Def.ReadCommand4):
 			if(Flag.Init== True):
 				Read()
 			else:
 				print('u have to init ur port :)')
 				Enter= input('')	
-		elif(Enter== 'Close' or Enter== 'close' or Enter== 'C' or Enter== 'c'):
+		elif(Enter== Def.CloseCommand1 or Enter== Def.CloseCommand2 or Enter== Def.CloseCommand3 or Enter== Def.CloseCommand4):
 			Close_Port()
-		elif(Enter== 'Exit' or Enter== 'exit' or Enter== 'E' or Enter== 'e'):
+		elif(Enter== Def.ExitCommand1 or Enter== Def.ExitCommand2 or Enter== Def.ExitCommand3 or Enter== Def.ExitCommand4):
 			break
