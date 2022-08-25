@@ -43,33 +43,44 @@ def Options():
 	Enter= input(Def.EnterString)
 	if(Enter== Def.ColumnsCommand):
 		print('		Enter num of columns')
-		Enter== input(Def.EnterString)
+		Enter= input(Def.EnterString)
 		Flag.Columns= int(Enter)
 	elif(Enter== Def.FormatCommand):
 		print(Def.FormatList)
-		Enter== input(Def.EnterString)
+		Enter= input(Def.EnterString)
 		Flag.NumFormat= int(Enter)
 
 def Read():
 	print('to stop conversation use ^C')
 	Flag.Read= True
 	while Flag.Read:
-		try:
-			data= ser.readline(1)
-		except:
-			Flag.Read= False
-			ser.close()
+		Cycle = 0
+		DataLine= ''
+		while(Cycle != Flag.Columns):
 			try:
-				ser.open()
+				data= ser.readline(1)
 			except:
-				Flag.Init= False
+				Flag.Read= False
+				ser.close()
+				try:
+					ser.open()
+				except:
+					Flag.Init= False
+				else:
+					break
 			else:
-				break
-		else:
-			if(data!= b''):
-				DataLine= ''
-				for i in data:
-					print(i)
+				if(data!= b''):
+					for i in data:
+						if  (Flag.NumFormat== Def.NoHex):
+							DataLine+= str(hex(i)) + ' '
+						elif(Flag.NumFormat== Def.NoDec):
+							DataLine+= str(i) + ' '
+						elif(Flag.NumFormat== Def.NoOct):
+							DataLine+= str(oct(i)) + ' '
+						elif(Flag.NumFormat== Def.NoBin):
+							DataLine+= str(bin(i)) + ' '						
+			Cycle+= 1
+		print(DataLine)
 
 def Close_Port():
 	Flag.Close= True
@@ -92,6 +103,13 @@ def Close_Port():
 			break
 		else:
 			print('Failed enter, try again')
+
+def debug():
+	print(Flag.Columns)
+	Enter= input('enter: ')
+	Flag.Columns= int(Enter)
+	print(Flag.Columns)
+	Enter= input('enter: ')
 
 
 if __name__ == '__main__':
@@ -120,8 +138,10 @@ if __name__ == '__main__':
 				Read()
 			else:
 				print('u have to init ur port :)')
-				Enter= input('')	
+				Enter= input('ok')	
 		elif(Enter== Def.CloseCommand1 or Enter== Def.CloseCommand2 or Enter== Def.CloseCommand3 or Enter== Def.CloseCommand4):
 			Close_Port()
 		elif(Enter== Def.ExitCommand1 or Enter== Def.ExitCommand2 or Enter== Def.ExitCommand3 or Enter== Def.ExitCommand4):
 			break
+		elif(Enter== 'debug'):
+			debug()
