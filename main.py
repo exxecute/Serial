@@ -32,10 +32,24 @@ def Init_Serial():
 		else:
 			print('Failed enter, try again')
 
-# def Check_Ports():
-# 	Enter= input('enter amount of ports')
-# 	for i in range(Enter):
-# 		ser.port= 'COM' + str(Enter)
+def Check_Ports():
+	PortsList= ''
+	Cycle= 0
+	for i in range(100):
+		NowPort= 'COM' + str(i)
+		ser.port= NowPort
+		try:
+			ser.open()
+		except:
+			print('')
+		else:
+			PortsList+= NowPort + ' '
+			Cycle+= 1
+			if(Cycle== 15):
+				print(PortsList)
+				PortsList= ''
+	print(PortsList)
+	Enter= input('ok')
 
 def Options():
 	clear()
@@ -143,5 +157,7 @@ if __name__ == '__main__':
 			Close_Port()
 		elif(Enter== Def.ExitCommand1 or Enter== Def.ExitCommand2 or Enter== Def.ExitCommand3 or Enter== Def.ExitCommand4):
 			break
+		elif(Enter== 'Check'):
+			Check_Ports()
 		elif(Enter== 'debug'):
 			debug()
