@@ -7,7 +7,7 @@ NoOct= 						2
 NoBin= 						3
 
 #strings
-version= 'v0.123 cmd'
+version= 'v0.13 cmd'
 EnterString= 'enter: '
 
 #help commands
@@ -50,6 +50,12 @@ CloseCommand2=	 			'close'
 CloseCommand3=				'C'
 CloseCommand4=				'c'
 
+#find commands
+FindCommand1=				'Find'
+FindCommand2=				'find'
+FindCommand3=				'F'
+FindCommand4=				'f'
+
 #strings
 HelpList= '''
 		command list:
@@ -66,7 +72,13 @@ HelpList= '''
 		- to read port
 
 		enter: Close/ close/ C/ c
-		- to close port'''
+		- to close port
+
+		enter: Exit/ exit/ E/ e
+		- to exit
+
+		enter: Find/ find/ F/ f
+		- to find serial port'''
 
 OptionsList= '''
 		options:

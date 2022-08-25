@@ -33,22 +33,32 @@ def Init_Serial():
 			print('Failed enter, try again')
 
 def Check_Ports():
+	if Flag.Init:
+		ser.close()
+		print(1)
 	PortsList= ''
 	Cycle= 0
+	Line= True
 	for i in range(100):
 		NowPort= 'COM' + str(i)
 		ser.port= NowPort
 		try:
 			ser.open()
 		except:
-			print('')
+			print(NowPort + ' fail')
 		else:
+			ser.close()
+			print(NowPort + ' ok')
 			PortsList+= NowPort + ' '
 			Cycle+= 1
 			if(Cycle== 15):
-				print(PortsList)
+				Line= False
+				print('u can use: ' + PortsList)
 				PortsList= ''
-	print(PortsList)
+	if Line:
+		print('u can use: ' + PortsList)
+	else:
+		print(PortsList)
 	Enter= input('ok')
 
 def Options():
@@ -157,7 +167,7 @@ if __name__ == '__main__':
 			Close_Port()
 		elif(Enter== Def.ExitCommand1 or Enter== Def.ExitCommand2 or Enter== Def.ExitCommand3 or Enter== Def.ExitCommand4):
 			break
-		elif(Enter== 'Check'):
+		elif(Enter== Def.FindCommand1 or Enter== Def.FindCommand2 or Enter== Def.FindCommand3 or Enter== Def.FindCommand4):
 			Check_Ports()
 		elif(Enter== 'debug'):
 			debug()
