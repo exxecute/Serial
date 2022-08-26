@@ -81,8 +81,15 @@ def Read():
 		Cycle = 0
 		DataLine= ''
 		while(Cycle != Flag.Columns):
+			ByteSizeCycle = Flag.ByteSize
 			try:
-				data= ser.readline(1)
+				data= 0
+				while(ByteSizeCycle!= 0):
+					EightByteData= ser.readline(1)
+					if(EightByteData!= b''):
+						for Dec in EightByteData:
+							data= (data << 8) + Dec
+						ByteSizeCycle-= 1
 			except:
 				Flag.Read= False
 				ser.close()
@@ -93,16 +100,14 @@ def Read():
 				else:
 					break
 			else:
-				if(data!= b''):
-					for i in data:
-						# if  (Flag.NumFormat== Def.NoHex):
-						# 	DataLine+= str(hex(i)) + ' '
-						# elif(Flag.NumFormat== Def.NoDec):
-							DataLine+= str(i) + ' '
-						# elif(Flag.NumFormat== Def.NoOct):
-						# 	DataLine+= str(oct(i)) + ' '
-						# elif(Flag.NumFormat== Def.NoBin):
-						# 	DataLine+= str(bin(i)) + ' '						
+				# if  (Flag.NumFormat== Def.NoHex):
+				# 	DataLine+= str(hex(i)) + ' '
+				# elif(Flag.NumFormat== Def.NoDec):
+					DataLine+= str(data) + ' '
+				# elif(Flag.NumFormat== Def.NoOct):
+				# 	DataLine+= str(oct(i)) + ' '
+				# elif(Flag.NumFormat== Def.NoBin):
+				# 	DataLine+= str(bin(i)) + ' '						
 			Cycle+= 1
 		if(DataLine!= ''):
 			print(DataLine)

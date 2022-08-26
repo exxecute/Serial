@@ -7,7 +7,7 @@ NoOct= 						2
 NoBin= 						3
 
 #strings
-version= 'v0.131 cmd'
+version= 'v0.14 cmd'
 EnterString= 'enter: '
 
 #help commands
@@ -31,6 +31,13 @@ OptionCommand4=				'o'
 #commands in options
 ColumnsCommand=				'1'
 FormatCommand=				'2'
+BytesizeCommand=			'3'
+
+#command bytesize
+EightBytes=					1
+SixteenBytes=				2
+TwentyFourBytes=			3
+ThirtyTwoBytes=				4
 
 #read commands
 ReadCommand1=				'Read'
@@ -83,7 +90,8 @@ HelpList= '''
 OptionsList= '''
 		options:
 		1 - to edit num of columns
-		2 - to edit num format'''
+		2 - to edit num format
+		3 - to edit num size'''
 
 FormatList= '''
 		formats:
