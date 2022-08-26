@@ -9,7 +9,7 @@ ser.stopbits = serial.STOPBITS_ONE
 ser.baudrate = 115200 
 ser.rtscts = False
 ser.dsrdtr = False
-ser.timeout = 1.0
+ser.timeout = None
 ser.write_timeout= 1.0
 
 def Init_Serial():
@@ -85,13 +85,11 @@ def Read():
 		Cycle = 0
 		DataLine= ''
 		while(Cycle != Flag.Columns):
-
 			try:
+				recivedata= ser.readline(Flag.ByteSize)
 				data= 0
-				data= ser.readline(Flag.ByteSize)
-				for Dec in data:
+				for Dec in recivedata:
 					data= (data << 8) + Dec
-				ByteSizeCycle-= 1
 			except:
 				Flag.Read= False
 				ser.close()
