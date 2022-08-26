@@ -7,7 +7,7 @@ NoOct= 						2
 NoBin= 						3
 
 #strings
-version= 'v0.13 cmd'
+version= 'v0.131 cmd'
 EnterString= 'enter: '
 
 #help commands

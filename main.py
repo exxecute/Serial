@@ -95,16 +95,17 @@ def Read():
 			else:
 				if(data!= b''):
 					for i in data:
-						if  (Flag.NumFormat== Def.NoHex):
-							DataLine+= str(hex(i)) + ' '
-						elif(Flag.NumFormat== Def.NoDec):
+						# if  (Flag.NumFormat== Def.NoHex):
+						# 	DataLine+= str(hex(i)) + ' '
+						# elif(Flag.NumFormat== Def.NoDec):
 							DataLine+= str(i) + ' '
-						elif(Flag.NumFormat== Def.NoOct):
-							DataLine+= str(oct(i)) + ' '
-						elif(Flag.NumFormat== Def.NoBin):
-							DataLine+= str(bin(i)) + ' '						
+						# elif(Flag.NumFormat== Def.NoOct):
+						# 	DataLine+= str(oct(i)) + ' '
+						# elif(Flag.NumFormat== Def.NoBin):
+						# 	DataLine+= str(bin(i)) + ' '						
 			Cycle+= 1
-		print(DataLine)
+		if(DataLine!= ''):
+			print(DataLine)
 
 def Close_Port():
 	Flag.Close= True
