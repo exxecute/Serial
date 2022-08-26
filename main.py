@@ -6,7 +6,7 @@ import defs as Def
 ser = serial.Serial()
 ser.bytesize = serial.EIGHTBITS
 ser.stopbits = serial.STOPBITS_ONE
-ser.baudrate = 115200
+ser.baudrate = 115200 
 ser.rtscts = False
 ser.dsrdtr = False
 ser.timeout = 1.0
@@ -73,6 +73,10 @@ def Options():
 		print(Def.FormatList)
 		Enter= input(Def.EnterString)
 		Flag.NumFormat= int(Enter)
+	elif(Enter== Def.BytesizeCommand):
+		print(Def.SizeList)
+		Enter= input(Def.EnterString)
+		Flag.ByteSize= int(Enter)
 
 def Read():
 	print('to stop conversation use ^C')
@@ -81,15 +85,13 @@ def Read():
 		Cycle = 0
 		DataLine= ''
 		while(Cycle != Flag.Columns):
-			ByteSizeCycle = Flag.ByteSize
+
 			try:
 				data= 0
-				while(ByteSizeCycle!= 0):
-					EightByteData= ser.readline(1)
-					if(EightByteData!= b''):
-						for Dec in EightByteData:
-							data= (data << 8) + Dec
-						ByteSizeCycle-= 1
+				data= ser.readline(Flag.ByteSize)
+				for Dec in data:
+					data= (data << 8) + Dec
+				ByteSizeCycle-= 1
 			except:
 				Flag.Read= False
 				ser.close()
@@ -103,11 +105,14 @@ def Read():
 				# if  (Flag.NumFormat== Def.NoHex):
 				# 	DataLine+= str(hex(i)) + ' '
 				# elif(Flag.NumFormat== Def.NoDec):
-					DataLine+= str(data) + ' '
+					DataLine+= str(data) + '	'
+					if(data < 10000000):
+						DataLine+= '	'
 				# elif(Flag.NumFormat== Def.NoOct):
 				# 	DataLine+= str(oct(i)) + ' '
 				# elif(Flag.NumFormat== Def.NoBin):
-				# 	DataLine+= str(bin(i)) + ' '						
+				# 	DataLine+= str(bin(i)) + ' '	
+
 			Cycle+= 1
 		if(DataLine!= ''):
 			print(DataLine)
@@ -133,14 +138,6 @@ def Close_Port():
 			break
 		else:
 			print('Failed enter, try again')
-
-def debug():
-	print(Flag.Columns)
-	Enter= input('enter: ')
-	Flag.Columns= int(Enter)
-	print(Flag.Columns)
-	Enter= input('enter: ')
-
 
 if __name__ == '__main__':
 	global clear
@@ -175,5 +172,5 @@ if __name__ == '__main__':
 			break
 		elif(Enter== Def.FindCommand1 or Enter== Def.FindCommand2 or Enter== Def.FindCommand3 or Enter== Def.FindCommand4):
 			Check_Ports()
-		elif(Enter== 'debug'):
-			debug()
+		# elif(Enter== 'd'):
+		# 	debug()

@@ -7,7 +7,7 @@ NoOct= 						2
 NoBin= 						3
 
 #strings
-version= 'v0.14 cmd'
+version= 'v0.141 cmd'
 EnterString= 'enter: '
 
 #help commands
@@ -99,3 +99,10 @@ FormatList= '''
 		2 - dec
 		3 - oct
 		4 - bin'''
+
+SizeList= '''
+		sizes:
+		1 - 8 bytes
+		2 - 16 bytes
+		3 - 24 bytes
+		4 - 32 bytes'''
