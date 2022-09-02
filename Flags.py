@@ -4,4 +4,4 @@ Close = False
 
 Columns = 1
 NumFormat = 1
-ByteSize = 3
+ByteSize = 1

@@ -13,7 +13,35 @@ ser.dsrdtr = False
 ser.timeout = None
 ser.write_timeout= 1.0
 
+# return string options
+def StringOption(NumCommand, Command):
+	Answer = ''
 
+	# Size Commands
+	if(NumCommand == Def.BytesizeCommand):
+		if(Command == Def.EightBytes):
+			Answer = 'Eight Byte Size'
+		elif(Command == Def.SixteenBytes):
+			Answer = 'Sixteen Byte Size'
+		elif(Command == Def.TwentyFourBytes):
+			Answer = 'Twenty Four Byte Size'
+		elif(Command == Def.ThirtyTwoBytes):
+			Answer = 'Thirty Two Byte Size'
+
+	# Format Commands
+	if(NumCommand == Def.FormatCommand):
+		if(Command == Def.NoHex):
+			Answer = 'Hex'
+		elif(Command == Def.NoDec):
+			Answer = 'Dec'
+		elif(Command == Def.NoOct):
+			Answer = 'Oct'
+		elif(Command == Def.NoBin):
+			Answer = 'Bin'
+
+	return Answer
+
+# main command to open serial port
 def Init_Serial():
 	while(Flag.Init == False):
 		print('''
@@ -35,7 +63,7 @@ def Init_Serial():
 		else:
 			print('Failed enter, try again')
 
-
+# main command to find port that u can open
 def Check_Ports():
 	if Flag.Init:
 		ser.close()
@@ -67,26 +95,39 @@ def Check_Ports():
 
 	Enter = input('ok')
 
-
+# main command to edit formats columns etc
 def Options():
-	clear()
-	print(Def.OptionsList)
+	EnterLoop = True
+	while EnterLoop:
+		clear()
+		print(Def.OptionsList)
 
-	Enter = input(Def.EnterString)
-	if(Enter == Def.ColumnsCommand):
-		print('		Enter num of columns')
+		print('Columns = ', Flag.Columns, 
+		    '\nFormat Data = ', StringOption(Def.FormatCommand, Flag.NumFormat),
+		    '\nByte Size = ', StringOption(Def.BytesizeCommand, Flag.ByteSize))
+		print()
 		Enter = input(Def.EnterString)
-		Flag.Columns = int(Enter)
-	elif(Enter == Def.FormatCommand):
-		print(Def.FormatList)
-		Enter = input(Def.EnterString)
-		Flag.NumFormat = int(Enter)
-	elif(Ente == Def.BytesizeCommand):
-		print(Def.SizeList)
-		Enter = input(Def.EnterString)
-		Flag.ByteSize = int(Enter)
 
+		if(Enter == Def.ColumnsCommand):
+			print('		Enter num of columns')
+			Enter = input(Def.EnterString)
+			Flag.Columns = int(Enter)
 
+		elif(Enter == Def.FormatCommand):
+			print(Def.FormatList)
+			Enter = input(Def.EnterString)
+			Flag.NumFormat = int(Enter)
+
+		elif(Enter == Def.BytesizeCommand):
+			print(Def.SizeList)
+			Enter = input(Def.EnterString)
+			Flag.ByteSize = int(Enter)
+
+		elif(Enter == Def.ExitCommand1 or Enter == Def.ExitCommand2 or 
+			 Enter == Def.ExitCommand3 or Enter == Def.ExitCommand4):
+			EnterLoop = False
+
+# main command to read port that u open
 def Read():
 	print('to stop conversation use ^C')
 	Flag.Read = True
@@ -127,7 +168,7 @@ def Read():
 		if(DataLine != ''):
 			print(DataLine)
 
-
+# main command to close any port
 def Close_Port():
 	Flag.Close = True
 

@@ -1,13 +1,16 @@
+import Flags as Flag
 import os
 
+
+
 #reading format
-NoHex = 					0
-NoDec = 					1
-NoOct = 					2
-NoBin = 					3
+NoHex = 					1
+NoDec = 					2
+NoOct = 					3
+NoBin = 					4
 
 #strings
-version = 'v0.142pep8 cmd'
+version = 'v0.143 cmd'
 EnterString = 'enter: '
 
 #help commands
@@ -90,8 +93,10 @@ HelpList = '''
 OptionsList = '''
 		options:
 		1 - to edit num of columns
-		2 - to edit num format
-		3 - to edit num size'''
+		2 - to edit num format 
+		3 - to edit num size
+
+		e - exit'''
 
 FormatList = '''
 		formats:
