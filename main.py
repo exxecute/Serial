@@ -3,6 +3,8 @@ import defs as Def
 import serial
 import os
 
+__version__ = 'v0.15 cmd'
+
 
 ser = serial.Serial()
 ser.bytesize = serial.EIGHTBITS
@@ -153,16 +155,25 @@ def Read():
 					break
 			else:
 
-				# if  (Flag.NumFormat== Def.NoHex):
-				# 	DataLine+= str(hex(i)) + ' '
-				# elif(Flag.NumFormat== Def.NoDec):
+				if  (Flag.NumFormat== Def.NoHex):
+					DataLine += str(hex(data)) + '	'
+					if(data < 10000000): 
+						DataLine += '	'
+
+				elif(Flag.NumFormat== Def.NoDec):
 					DataLine += str(data) + '	'
 					if(data < 10000000): 
 						DataLine += '	'
-				# elif(Flag.NumFormat== Def.NoOct):
-				# 	DataLine+= str(oct(i)) + ' '
-				# elif(Flag.NumFormat== Def.NoBin):
-				# 	DataLine+= str(bin(i)) + ' '	
+
+				elif(Flag.NumFormat== Def.NoOct):
+					DataLine += str(oct(data)) + '	'
+					if(data < 10000000): 
+						DataLine += '	'
+
+				elif(Flag.NumFormat== Def.NoBin):
+					DataLine += str(bin(data)) + '	'
+					if(data < 10000000): 
+						DataLine += '	'
 
 			Cycle += 1
 		if(DataLine != ''):
@@ -205,7 +216,7 @@ if __name__ == '__main__':
 	while(True):
 		clear()
 
-		print('''		serial Reader ''' + Def.version)
+		print('''		serial Reader ''' + __version__)
 
 		if(Flag.Init == True):
 			print('port initialised')
